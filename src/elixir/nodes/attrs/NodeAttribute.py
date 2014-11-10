@@ -2,11 +2,17 @@
 # (C)2014
 # Scott Ernst
 
-from maya import OpenMaya
+from __future__ import print_function, absolute_import, unicode_literals, division
 
 from pyaid.ArgsUtils import ArgsUtils
 
 from elixir.nodes.attrs.NodeComputeData import NodeComputeData
+
+try:
+    # noinspection PyUnresolvedReferences,PyUnresolvedReferences
+    from maya import OpenMaya
+except Exception:
+    maya = None
 
 #___________________________________________________________________________________________________ NodeAttribute
 class NodeAttribute(OpenMaya.MObject):

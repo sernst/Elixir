@@ -2,6 +2,10 @@
 # (C)2014
 # Scott Ernst
 
+from __future__ import print_function, absolute_import, unicode_literals, division
+
+from pyaid.dict.DictUtils import DictUtils
+
 #___________________________________________________________________________________________________ NodeComputeHandles
 class NodeComputeHandles(object):
     """A class for..."""
@@ -30,7 +34,7 @@ class NodeComputeHandles(object):
 #___________________________________________________________________________________________________ cleanAll
     def cleanAll(self):
         """Doc..."""
-        for name,value in self._handles.iteritems():
+        for name,value in DictUtils.iter(self._handles):
             value.setClean()
 
 #===================================================================================================
@@ -54,10 +58,6 @@ class NodeComputeHandles(object):
 #___________________________________________________________________________________________________ __repr__
     def __repr__(self):
         return self.__str__()
-
-#___________________________________________________________________________________________________ __unicode__
-    def __unicode__(self):
-        return unicode(self.__str__())
 
 #___________________________________________________________________________________________________ __str__
     def __str__(self):

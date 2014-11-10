@@ -2,9 +2,15 @@
 # (C)2014
 # Scott Ernst
 
-from maya import OpenMaya
+from __future__ import print_function, absolute_import, unicode_literals, division
 
 from elixir.nodes.attrs.NodeAttribute import NodeAttribute
+
+try:
+    # noinspection PyUnresolvedReferences,PyUnresolvedReferences
+    from maya import OpenMaya
+except Exception:
+    maya = None
 
 #___________________________________________________________________________________________________ NumericNodeAttribute
 class NumericNodeAttribute(NodeAttribute):

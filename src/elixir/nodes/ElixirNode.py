@@ -2,16 +2,25 @@
 # (C)2014
 # Scott Ernst
 
-import sys
+from __future__ import print_function, absolute_import, unicode_literals, division
 
-from maya import OpenMaya
-from maya import OpenMayaMPx
+import sys
+from pyaid.dict.DictUtils import DictUtils
 
 from pyaid.reflection.Reflection import Reflection
 
 from elixir.nodes.attrs.NodeAttribute import NodeAttribute
 
+try:
+    # noinspection PyUnresolvedReferences,PyUnresolvedReferences
+    from maya import OpenMaya
+    # noinspection PyUnresolvedReferences,PyUnresolvedReferences
+    from maya import OpenMayaMPx
+except Exception:
+    maya = None
+
 #___________________________________________________________________________________________________ ElixirNode
+# noinspection PyUnusedLocal,PyUnusedLocal
 class ElixirNode(OpenMayaMPx.MPxNode):
     """A class for..."""
 
@@ -35,7 +44,7 @@ class ElixirNode(OpenMayaMPx.MPxNode):
 
 #___________________________________________________________________________________________________ compute
     def compute(self, plug, dataBlock):
-        for attrDef in self.__nodeAttrDefs__.itervalues():
+        for n, attrDef in DictUtils.iter(self.__nodeAttrDefs__):
             if plug == attrDef.attr:
                 if not attrDef.isComputable:
                     break
@@ -73,7 +82,7 @@ class ElixirNode(OpenMayaMPx.MPxNode):
     def deregister(cls, plugin):
         try:
             plugin.deregisterNode(OpenMaya.MTypeId(cls.NODE_ID))
-        except Exception, err:
+        except Exception:
             sys.stderr.write('ERROR: Unable to deregister node: ' + cls.NODE_NAME)
             raise
 
@@ -95,7 +104,7 @@ class ElixirNode(OpenMayaMPx.MPxNode):
                 cls.addAttribute(getattr(cls, name))
 
         # Iterate through each attribute created and connect them according to their affects
-        for attrDef in attrs.itervalues():
+        for n, attrDef in DictUtils.iter(attrs):
             for target in attrDef.affects:
                 cls.attributeAffects(attrDef.attr, getattr(cls, target))
 
@@ -107,6 +116,7 @@ class ElixirNode(OpenMayaMPx.MPxNode):
         pass
 
 #___________________________________________________________________________________________________ _computeImpl
+    # noinspection PyMethodMayBeStatic
     def _computeImpl(self, plug, dataBlock):
         """Doc..."""
         pass

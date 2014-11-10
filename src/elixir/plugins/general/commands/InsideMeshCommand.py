@@ -2,7 +2,13 @@
 # (C)2014
 # Scott Ernst
 
-from maya import OpenMaya
+from __future__ import print_function, absolute_import, unicode_literals, division
+
+try:
+    # noinspection PyUnresolvedReferences
+    from maya import OpenMaya
+except Exception:
+    maya = None
 
 from elixir.commands.ElixirCommand import ElixirCommand
 
